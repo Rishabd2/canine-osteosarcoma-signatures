@@ -1,0 +1,31 @@
+key,claim,cohort,signature,endpoint,n_groups,paper_p,paper_medians,source
+dog_gs1_dfi,1,DOG2,GS-1,DFI,FP 58 / PP 128,0.0095,FP 234 / PP 150,Fig. 2b
+dog_gs1_os,1,DOG2,GS-1,OS,FP 58 / PP 128,0.04,FP 373 / PP 245,Fig. 2c
+dog_gs2_dfi,1,DOG2,GS-2,DFI,FP 52 / PP 134,0.028,FP 240 / PP 150,Fig. 2e
+dog_gs2_os,1,DOG2,GS-2,OS,FP 52 / PP 134,0.046,FP 386 / PP 240,Fig. 2f
+dog_ssgsea_dfi,2,DOG2,ssGSEA hallmark k-means,DFI,FP 96 / PP 90,0.014,FP 224 / PP 138,Supp. Fig. 8a
+dog_ssgsea_os,2,DOG2,ssGSEA hallmark k-means,OS,FP 96 / PP 90,0.024,FP 320 / PP 234,Supp. Fig. 8b
+dog_isa1,2,DOG2,ISA-1 bicluster vs rest,DFI,ISA 44 / rest 142,0.81,ISA 205 / rest 160,Fig. 7e
+dog_isa2,2,DOG2,ISA-2 bicluster vs rest,DFI,ISA 34 / rest 152,0.32,ISA 121.5 / rest 180,Fig. 7f
+dog_isa3,2,DOG2,ISA-3 bicluster vs rest,DFI,ISA 38 / rest 148,0.16,ISA 252 / rest 156,Fig. 7g
+dog_isa4,2,DOG2,ISA-4 bicluster vs rest,DFI,ISA 54 / rest 132,0.026,ISA 103.5 / rest 205,Fig. 7h
+dog_irx1_dfi,2,DOG2,IRX1 median split,DFI,high 93 / low 93,0.0054,high 153 / low 214,Supp. Fig. 9b
+hum_gs1_pfs,3,TARGET all,GS-1,PFS,FP 30 / PP 49,0.047,FP NA / PP 961,Fig. 3b
+hum_gs1_os,3,TARGET all,GS-1,OS,FP 30 / PP 49,0.014,FP NA / PP 3862,Fig. 3c
+hum_gs2_pfs,3,TARGET all,GS-2,PFS,FP 28 / PP 51,0.12,FP NA / PP 1750,Fig. 3e
+hum_gs2_os,3,TARGET all,GS-2,OS,FP 28 / PP 51,0.028,FP NA / PP 3862,Fig. 3f
+hum_nonmet_gs1_pfs,3,TARGET non-metastatic,GS-1,PFS,FP 25 / PP 34,0.49,FP NA / PP 1993,Supp. Fig. 1b
+hum_nonmet_gs1_os,3,TARGET non-metastatic,GS-1,OS,FP 25 / PP 34,0.56,FP NA / PP 3862,Supp. Fig. 1c
+hum_nonmet_gs2_pfs,3,TARGET non-metastatic,GS-2,PFS,FP 24 / PP 35,0.6,FP NA / PP 1993,Supp. Fig. 1e
+hum_nonmet_gs2_os,3,TARGET non-metastatic,GS-2,OS,FP 24 / PP 35,0.61,FP NA / PP 3862,Supp. Fig. 1f
+hum_met_gs1_pfs,3,TARGET metastatic,GS-1,PFS,FP 5 / PP 15,0.021,FP NA / PP 237,Supp. Fig. 2b
+hum_met_gs1_os,3,TARGET metastatic,GS-1,OS,FP 5 / PP 15,0.012,FP NA / PP 519,Supp. Fig. 2c
+hum_met_gs2_pfs,3,TARGET metastatic,GS-2,PFS,FP 4 / PP 16,0.081,FP NA / PP 311,Supp. Fig. 2e
+hum_met_gs2_os,3,TARGET metastatic,GS-2,OS,FP 4 / PP 16,0.044,FP NA / PP 562,Supp. Fig. 2f
+hum_isa1_pfs,3,TARGET all,ISA-1,PFS,30 / 49,0.18,NA / 1750,Fig. 8d
+hum_isa2_pfs,3,TARGET all,ISA-2,PFS,7 / 72,0.95,NA / 1933,Fig. 8e
+hum_isa3_pfs,3,TARGET all,ISA-3,PFS,28 / 51,0.0012,NA / 811,Fig. 8f
+hum_nonmet_isa1_pfs,3,TARGET non-metastatic,ISA-1,PFS,24 / 35,0.024,NA / 1750,Fig. 9d
+hum_nonmet_isa2_pfs,3,TARGET non-metastatic,ISA-2,PFS,4 / 55,0.12,NA / 1993,Fig. 9e
+hum_nonmet_isa3_pfs,3,TARGET non-metastatic,ISA-3,PFS,26 / 33,0.042,NA / 1933,Fig. 9f
+hum_nonmet_irx1_pfs,3,TARGET non-metastatic,IRX1 median split,PFS,high 30 / low 29,0.014,high 1452 / low NA,Supp. Fig. 9a
