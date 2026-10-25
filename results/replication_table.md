@@ -9,40 +9,42 @@ assignments from Supplementary Data 1 against the paper's outcomes. ARI compares
 clusters with the paper's.
 
 Agreement: **yes** = same call at p < 0.05; **partial** = same direction, call differs;
-**no** = opposite direction.
+**no** = opposite direction; **different partition** = our clusters overlap the paper's
+with ARI < 0.5. Bootstrap bounds that land on a resample where one group has no events
+(HR infinite or zero) are reported as not estimable, with the count of such resamples.
 
 | Claim | Test | Paper groups | Paper p | Paper labels re-tested p | Ours | Our p (q) | HR [95% boot CI] | ARI vs paper | Agree |
 |---|---|---|---|---|---|---|---|---|---|
 | 1 | DOG2: GS-1, DFI (Fig. 2b) | FP 58 / PP 128 | 0.0095 | 0.0095 | re-derived: PP 126 / FP 60 | 0.011 (0.066) | 1.59 [1.12, 2.28] (PP vs FP) | 0.96 | yes |
 | 1 | DOG2: GS-1, OS (Fig. 2c) | FP 58 / PP 128 | 0.04 | 0.04 | re-derived: PP 126 / FP 60 | 0.034 (0.11) | 1.51 [1.05, 2.19] (PP vs FP) | 0.96 | yes |
-| 1 | DOG2: GS-2, DFI (Fig. 2e) | FP 52 / PP 134 | 0.028 | 0.026 | re-derived: PP 134 / FP 52 | 0.049 (0.12) | 1.45 [1.02, 2.08] (PP vs FP) | 0.96 | yes |
+| 1 | DOG2: GS-2, DFI (Fig. 2e) | FP 52 / PP 134 | 0.028 | 0.026 | re-derived: PP 134 / FP 52 | 0.049 (0.12) | 1.45 [1.02, 2.09] (PP vs FP) | 0.96 | yes |
 | 1 | DOG2: GS-2, OS (Fig. 2f) | FP 52 / PP 134 | 0.046 | 0.046 | re-derived: PP 134 / FP 52 | 0.077 (0.15) | 1.43 [1.00, 2.07] (PP vs FP) | 0.96 | partial |
-| 2 | DOG2: ssGSEA hallmark k-means, DFI (Supp. Fig. 8a) | FP 96 / PP 90 | 0.014 | 0.014 | re-derived: PP 70 / FP 116 | 2.9e-05 (8.7e-04) | 2.03 [1.47, 2.91] (PP vs FP) | 0.55 | yes |
-| 2 | DOG2: ssGSEA hallmark k-means, OS (Supp. Fig. 8b) | FP 96 / PP 90 | 0.024 | 0.024 | re-derived: PP 70 / FP 116 | 6.5e-04 (0.0089) | 1.84 [1.28, 2.63] (PP vs FP) | 0.55 | yes |
+| 2 | DOG2: ssGSEA hallmark k-means, DFI (Supp. Fig. 8a) | FP 96 / PP 90 | 0.014 | 0.014 | re-derived: PP 70 / FP 116 | 2.9e-05 (8.7e-04) | 2.03 [1.47, 2.92] (PP vs FP) | 0.55 | yes |
+| 2 | DOG2: ssGSEA hallmark k-means, OS (Supp. Fig. 8b) | FP 96 / PP 90 | 0.024 | 0.024 | re-derived: PP 70 / FP 116 | 6.5e-04 (0.0089) | 1.84 [1.28, 2.64] (PP vs FP) | 0.55 | yes |
 | 2 | DOG2: ISA-1 bicluster vs rest, DFI (Fig. 7e) | ISA 44 / rest 142 | 0.81 | 0.81 | re-derived (paperlab-ISA-2, 19 shared genes): ISA 45 / REST 141 | 0.69 (0.72) | 1.08 [0.77, 1.61] (ISA vs REST) |  | yes |
-| 2 | DOG2: ISA-2 bicluster vs rest, DFI (Fig. 7f) | ISA 34 / rest 152 | 0.32 | 0.32 | re-derived (paperlab-ISA-3, 17 shared genes): ISA 38 / REST 148 | 0.61 (0.66) | 1.11 [0.74, 1.77] (ISA vs REST) |  | yes |
+| 2 | DOG2: ISA-2 bicluster vs rest, DFI (Fig. 7f) | ISA 34 / rest 152 | 0.32 | 0.32 | re-derived (paperlab-ISA-3, 17 shared genes): ISA 38 / REST 148 | 0.61 (0.66) | 1.11 [0.73, 1.77] (ISA vs REST) |  | yes |
 | 2 | DOG2: ISA-3 bicluster vs rest, DFI (Fig. 7g) | ISA 38 / rest 148 | 0.16 | 0.16 | re-derived (paperlab-ISA-4, 13 shared genes): ISA 42 / REST 144 | 0.16 (0.23) | 0.76 [0.52, 1.06] (ISA vs REST) |  | yes |
-| 2 | DOG2: ISA-4 bicluster vs rest, DFI (Fig. 7h) | ISA 54 / rest 132 | 0.026 | 0.026 | re-derived (paperlab-ISA-1, 28 shared genes): ISA 55 / REST 131 | 0.02 (0.092) | 1.52 [1.06, 2.36] (ISA vs REST) |  | yes |
-| 2 | DOG2: IRX1 median split, DFI (Supp. Fig. 9b) | high 93 / low 93 | 0.0054 | n/a | re-derived: high 93 / low 93 | 9.4e-04 (0.0089) | 1.75 [1.29, 2.47] (high vs low) |  | yes |
-| 3 | TARGET all: GS-1, PFS (Fig. 3b) | FP 30 / PP 49 | 0.047 | 0.047 | re-derived: PP 50 / FP 29 | 0.08 (0.15) | 1.94 [0.93, 4.70] (PP vs FP) | 0.95 | partial |
-| 3 | TARGET all: GS-1, OS (Fig. 3c) | FP 30 / PP 49 | 0.014 | 0.014 | re-derived: PP 50 / FP 29 | 0.021 (0.092) | 3.27 [1.46, 13.33] (PP vs FP) | 0.95 | yes |
-| 3 | TARGET all: GS-2, PFS (Fig. 3e) | FP 28 / PP 51 | 0.12 | 0.12 | re-derived: PP 51 / FP 28 | 0.12 (0.18) | 1.81 [0.86, 4.36] (PP vs FP) | 1.00 | yes |
-| 3 | TARGET all: GS-2, OS (Fig. 3f) | FP 28 / PP 51 | 0.028 | 0.028 | re-derived: PP 51 / FP 28 | 0.028 (0.11) | 3.10 [1.39, 12.64] (PP vs FP) | 1.00 | yes |
-| 3 | TARGET non-metastatic: GS-1, PFS (Supp. Fig. 1b) | FP 25 / PP 34 | 0.49 | n/a | re-derived: PP 34 / FP 25 | 0.49 (0.61) | 1.35 [0.58, 3.66] (PP vs FP) |  | yes |
-| 3 | TARGET non-metastatic: GS-1, OS (Supp. Fig. 1c) | FP 25 / PP 34 | 0.56 | n/a | re-derived: PP 34 / FP 25 | 0.56 (0.66) | 1.42 [0.43, 6.18] (PP vs FP) |  | yes |
-| 3 | TARGET non-metastatic: GS-2, PFS (Supp. Fig. 1e) | FP 24 / PP 35 | 0.6 | n/a | re-derived: PP 35 / FP 24 | 0.6 (0.66) | 1.25 [0.53, 3.35] (PP vs FP) |  | yes |
-| 3 | TARGET non-metastatic: GS-2, OS (Supp. Fig. 1f) | FP 24 / PP 35 | 0.61 | n/a | re-derived: PP 35 / FP 24 | 0.61 (0.66) | 1.36 [0.40, 5.79] (PP vs FP) |  | yes |
-| 3 | TARGET metastatic: GS-1, PFS (Supp. Fig. 2b) | FP 5 / PP 15 | 0.021 | 0.021 | re-derived: PP 14 / FP 6 | 0.081 (0.15) | 3.63 [0.73, 13.91] (PP vs FP) | 0.80 | partial |
-| 3 | TARGET metastatic: GS-1, OS (Supp. Fig. 2c) | FP 5 / PP 15 | 0.012 | 0.012 | re-derived: PP 14 / FP 6 | 0.052 (0.12) | 6.01 [0.74, 12.03] (PP vs FP) | 0.80 | partial |
-| 3 | TARGET metastatic: GS-2, PFS (Supp. Fig. 2e) | FP 4 / PP 16 | 0.081 | 0.081 | re-derived: PP 10 / FP 10 | 0.25 (0.36) | 1.94 [0.61, 8.51] (PP vs FP) | 0.13 | yes |
-| 3 | TARGET metastatic: GS-2, OS (Supp. Fig. 2f) | FP 4 / PP 16 | 0.044 | 0.044 | re-derived: PP 10 / FP 10 | 0.1 (0.18) | 2.60 [0.82, 11.59] (PP vs FP) | 0.13 | partial |
-| 3 | TARGET all: ISA-1, PFS (Fig. 8d) | 30 / 49 | 0.18 | 0.18 | re-derived: low 51 / high 28 | 0.32 (0.41) | 1.43 [0.73, 3.04] (low vs high) | 0.90 | yes |
-| 3 | TARGET all: ISA-2, PFS (Fig. 8e) | 7 / 72 | 0.95 | 0.95 | re-derived: low 72 / high 7 | 0.95 (0.95) | 1.04 [0.24, 4.06] (low vs high) | 1.00 | yes |
-| 3 | TARGET all: ISA-3, PFS (Fig. 8f) | 28 / 51 | 0.0012 | 0.0012 | re-derived: low 51 / high 28 | 0.0012 (0.0089) | 3.85 [1.92, 11.63] (low vs high) | 1.00 | yes |
-| 3 | TARGET non-metastatic: ISA-1, PFS (Fig. 9d) | 24 / 35 | 0.024 | 0.024 | re-derived: low 38 / high 21 | 0.041 (0.11) | 2.70 [1.14, 10.01] (low vs high) | 0.68 | yes |
+| 2 | DOG2: ISA-4 bicluster vs rest, DFI (Fig. 7h) | ISA 54 / rest 132 | 0.026 | 0.026 | re-derived (paperlab-ISA-1, 28 shared genes): ISA 55 / REST 131 | 0.02 (0.092) | 1.52 [1.05, 2.36] (ISA vs REST) |  | yes |
+| 2 | DOG2: IRX1 median split, DFI (Supp. Fig. 9b) | high 93 / low 93 | 0.0054 | n/a | re-derived: high 93 / low 93 | 9.4e-04 (0.0089) | 1.75 [1.29, 2.48] (high vs low) |  | yes |
+| 3 | TARGET all: GS-1, PFS (Fig. 3b) | FP 30 / PP 49 | 0.047 | 0.047 | re-derived: PP 50 / FP 29 | 0.08 (0.15) | 1.94 [0.92, 4.71] (PP vs FP) | 0.95 | partial |
+| 3 | TARGET all: GS-1, OS (Fig. 3c) | FP 30 / PP 49 | 0.014 | 0.014 | re-derived: PP 50 / FP 29 | 0.021 (0.092) | 3.27 [1.45, 15.60] (13/1000 resamples with a zero-event group) (PP vs FP) | 0.95 | yes |
+| 3 | TARGET all: GS-2, PFS (Fig. 3e) | FP 28 / PP 51 | 0.12 | 0.12 | re-derived: PP 51 / FP 28 | 0.12 (0.18) | 1.81 [0.84, 4.40] (PP vs FP) | 1.00 | yes |
+| 3 | TARGET all: GS-2, OS (Fig. 3f) | FP 28 / PP 51 | 0.028 | 0.028 | re-derived: PP 51 / FP 28 | 0.028 (0.11) | 3.10 [1.39, 14.55] (13/1000 resamples with a zero-event group) (PP vs FP) | 1.00 | yes |
+| 3 | TARGET non-metastatic: GS-1, PFS (Supp. Fig. 1b) | FP 25 / PP 34 | 0.49 | n/a | re-derived: PP 34 / FP 25 | 0.49 (0.61) | 1.35 [0.57, 3.67] (PP vs FP) |  | yes |
+| 3 | TARGET non-metastatic: GS-1, OS (Supp. Fig. 1c) | FP 25 / PP 34 | 0.56 | n/a | re-derived: PP 34 / FP 25 | 0.56 (0.66) | 1.42 [0.42, 7.65] (18/1000 resamples with a zero-event group) (PP vs FP) |  | yes |
+| 3 | TARGET non-metastatic: GS-2, PFS (Supp. Fig. 1e) | FP 24 / PP 35 | 0.6 | n/a | re-derived: PP 35 / FP 24 | 0.6 (0.66) | 1.25 [0.52, 3.36] (PP vs FP) |  | yes |
+| 3 | TARGET non-metastatic: GS-2, OS (Supp. Fig. 1f) | FP 24 / PP 35 | 0.61 | n/a | re-derived: PP 35 / FP 24 | 0.61 (0.66) | 1.36 [0.40, 7.54] (18/1000 resamples with a zero-event group) (PP vs FP) |  | yes |
+| 3 | TARGET metastatic: GS-1, PFS (Supp. Fig. 2b) | FP 5 / PP 15 | 0.021 | 0.021 | re-derived: PP 14 / FP 6 | 0.081 (0.15) | 3.63 [0.78, not estimable] (157/1000 resamples with a zero-event group) (PP vs FP) | 0.80 | partial |
+| 3 | TARGET metastatic: GS-1, OS (Supp. Fig. 2c) | FP 5 / PP 15 | 0.012 | 0.012 | re-derived: PP 14 / FP 6 | 0.052 (0.12) | 6.01 [0.86, not estimable] (363/1000 resamples with a zero-event group) (PP vs FP) | 0.80 | partial |
+| 3 | TARGET metastatic: GS-2, PFS (Supp. Fig. 2e) | FP 4 / PP 16 | 0.081 | 0.081 | re-derived: PP 10 / FP 10 | 0.25 (0.36) | 1.94 [0.61, 10.71] (9/1000 resamples with a zero-event group) (PP vs FP) | 0.13 | different partition |
+| 3 | TARGET metastatic: GS-2, OS (Supp. Fig. 2f) | FP 4 / PP 16 | 0.044 | 0.044 | re-derived: PP 10 / FP 10 | 0.1 (0.18) | 2.60 [0.81, 14.13] (14/1000 resamples with a zero-event group) (PP vs FP) | 0.13 | different partition |
+| 3 | TARGET all: ISA-1, PFS (Fig. 8d) | 30 / 49 | 0.18 | 0.18 | re-derived: low 51 / high 28 | 0.32 (0.41) | 1.43 [0.72, 3.12] (low vs high) | 0.90 | yes |
+| 3 | TARGET all: ISA-2, PFS (Fig. 8e) | 7 / 72 | 0.95 | 0.95 | re-derived: low 72 / high 7 | 0.95 (0.95) | 1.04 [0.24, not estimable] (45/1000 resamples with a zero-event group) (low vs high) | 1.00 | yes |
+| 3 | TARGET all: ISA-3, PFS (Fig. 8f) | 28 / 51 | 0.0012 | 0.0012 | re-derived: low 51 / high 28 | 0.0012 (0.0089) | 3.85 [1.92, 11.68] (2/1000 resamples with a zero-event group) (low vs high) | 1.00 | yes |
+| 3 | TARGET non-metastatic: ISA-1, PFS (Fig. 9d) | 24 / 35 | 0.024 | 0.024 | re-derived: low 38 / high 21 | 0.041 (0.11) | 2.70 [1.14, 10.51] (3/1000 resamples with a zero-event group) (low vs high) | 0.68 | yes |
 | 3 | TARGET non-metastatic: ISA-2, PFS (Fig. 9e) | 4 / 55 | 0.12 | 0.12 | re-derived: low 55 / high 4 | 0.12 (0.18) | not estimable (a group has no events) (low vs high) | 1.00 | yes |
-| 3 | TARGET non-metastatic: ISA-3, PFS (Fig. 9f) | 26 / 33 | 0.042 | 0.042 | re-derived: low 57 / high 2 | 0.32 (0.41) | not estimable (a group has no events) (low vs high) | 0.02 | partial |
-| 3 | TARGET non-metastatic: IRX1 median split, PFS (Supp. Fig. 9a) | high 30 / low 29 | 0.014 | n/a | re-derived: high 29 / low 30 | 0.036 (0.11) | 2.49 [1.07, 7.93] (high vs low) |  | yes |
+| 3 | TARGET non-metastatic: ISA-3, PFS (Fig. 9f) | 26 / 33 | 0.042 | 0.042 | re-derived: low 57 / high 2 | 0.32 (0.41) | not estimable (a group has no events) (low vs high) | 0.02 | different partition |
+| 3 | TARGET non-metastatic: IRX1 median split, PFS (Supp. Fig. 9a) | high 30 / low 29 | 0.014 | n/a | re-derived: high 29 / low 30 | 0.036 (0.11) | 2.49 [1.06, 8.02] (1/1000 resamples with a zero-event group) (high vs low) |  | yes |
 
 ## Authors' km_clust.py on the same inputs
 
@@ -65,25 +67,25 @@ the paper's published ssGSEA clusters (`paperlab`).
 
 | Bicluster | Genes | Closest published (shared genes) | Endpoint | ISA / rest n | p | HR ISA vs rest [boot CI] |
 |---|---|---|---|---|---|---|
-| denovo-ISA-1 | 7 | ISA-1 (0) | DFI | 45 / 141 | 0.72 | 1.08 [0.73, 1.62] |
-| denovo-ISA-1 | 7 | ISA-1 (0) | OS | 45 / 141 | 0.68 | 1.09 [0.68, 1.72] |
+| denovo-ISA-1 | 7 | ISA-1 (0) | DFI | 45 / 141 | 0.72 | 1.08 [0.72, 1.63] |
+| denovo-ISA-1 | 7 | ISA-1 (0) | OS | 45 / 141 | 0.68 | 1.09 [0.68, 1.73] |
 | denovo-ISA-2 | 7 | ISA-2 (7) | DFI | 33 / 153 | 0.94 | 0.98 [0.64, 1.60] |
-| denovo-ISA-2 | 7 | ISA-2 (7) | OS | 33 / 153 | 0.78 | 1.07 [0.66, 1.81] |
-| denovo-ISA-3 | 6 | ISA-4 (4) | DFI | 43 / 143 | 0.25 | 1.25 [0.81, 1.90] |
+| denovo-ISA-2 | 7 | ISA-2 (7) | OS | 33 / 153 | 0.78 | 1.07 [0.66, 1.82] |
+| denovo-ISA-3 | 6 | ISA-4 (4) | DFI | 43 / 143 | 0.25 | 1.25 [0.81, 1.91] |
 | denovo-ISA-3 | 6 | ISA-4 (4) | OS | 43 / 143 | 0.25 | 1.27 [0.82, 1.92] |
-| denovo-ISA-4 | 8 | ISA-1 (7) | DFI | 43 / 143 | 0.081 | 0.70 [0.48, 1.03] |
+| denovo-ISA-4 | 8 | ISA-1 (7) | DFI | 43 / 143 | 0.081 | 0.70 [0.47, 1.03] |
 | denovo-ISA-4 | 8 | ISA-1 (7) | OS | 43 / 143 | 0.066 | 0.66 [0.41, 1.04] |
-| denovo-ISA-5 | 5 | ISA-1 (0) | DFI | 46 / 140 | 0.0053 | 0.57 [0.38, 0.83] |
-| denovo-ISA-5 | 5 | ISA-1 (0) | OS | 46 / 140 | 0.036 | 0.64 [0.42, 0.99] |
-| paperlab-ISA-1 | 28 | ISA-4 (28) | DFI | 55 / 131 | 0.02 | 1.52 [1.06, 2.36] |
-| paperlab-ISA-1 | 28 | ISA-4 (28) | OS | 55 / 131 | 0.028 | 1.52 [1.01, 2.38] |
+| denovo-ISA-5 | 5 | ISA-1 (0) | DFI | 46 / 140 | 0.0053 | 0.57 [0.37, 0.84] |
+| denovo-ISA-5 | 5 | ISA-1 (0) | OS | 46 / 140 | 0.036 | 0.64 [0.42, 1.00] |
+| paperlab-ISA-1 | 28 | ISA-4 (28) | DFI | 55 / 131 | 0.02 | 1.52 [1.05, 2.36] |
+| paperlab-ISA-1 | 28 | ISA-4 (28) | OS | 55 / 131 | 0.028 | 1.52 [1.01, 2.39] |
 | paperlab-ISA-2 | 20 | ISA-1 (19) | DFI | 45 / 141 | 0.69 | 1.08 [0.77, 1.61] |
 | paperlab-ISA-2 | 20 | ISA-1 (19) | OS | 45 / 141 | 0.77 | 1.06 [0.70, 1.56] |
-| paperlab-ISA-3 | 17 | ISA-2 (17) | DFI | 38 / 148 | 0.61 | 1.11 [0.74, 1.77] |
-| paperlab-ISA-3 | 17 | ISA-2 (17) | OS | 38 / 148 | 0.44 | 1.18 [0.75, 1.90] |
+| paperlab-ISA-3 | 17 | ISA-2 (17) | DFI | 38 / 148 | 0.61 | 1.11 [0.73, 1.77] |
+| paperlab-ISA-3 | 17 | ISA-2 (17) | OS | 38 / 148 | 0.44 | 1.18 [0.75, 1.91] |
 | paperlab-ISA-4 | 13 | ISA-3 (13) | DFI | 42 / 144 | 0.16 | 0.76 [0.52, 1.06] |
 | paperlab-ISA-4 | 13 | ISA-3 (13) | OS | 42 / 144 | 0.37 | 0.83 [0.58, 1.17] |
-| paperlab-ISA-5 | 14 | ISA-1 (0) | DFI | 38 / 148 | 0.57 | 0.89 [0.56, 1.41] |
+| paperlab-ISA-5 | 14 | ISA-1 (0) | DFI | 38 / 148 | 0.57 | 0.89 [0.56, 1.42] |
 | paperlab-ISA-5 | 14 | ISA-1 (0) | OS | 38 / 148 | 0.59 | 0.88 [0.54, 1.41] |
 
 ## Claim 4: immune deconvolution, GS-1 FP vs PP
@@ -114,3 +116,54 @@ Paper: CIBERSORTx LM22 (Table 1). Ours: MCP-counter and TIL10 constrained least 
 | TARGET metastatic | 7 | 5 | 5 |
 
 DOG2 FP-enriched sets that are also FP-enriched in TARGET all: 10 of 12 (paper: 10 of 10). Sets enriched in PP at FDR < 0.05: DOG2 0, TARGET all 0 (paper: none).
+
+## Frozen canine signatures in TARGET (leakage-safe test of claim 3)
+
+10 signatures derived from canine data only, hashed in `results/frozen_signatures.json`
+before any human file was read, applied to TARGET all and non-metastatic (k-means, k = 2,
+high vs low by mean signature score), PFS and OS: 40 tests. 4 reach p < 0.05, against
+2 expected by chance if none carried signal. `denovo` signatures come from our ssGSEA
+clusters; `paperlab` signatures come from the paper's published ssGSEA clusters.
+
+| Signature | Genes (closest published, shared) | Cohort | Endpoint | low / high n | p | HR low vs high [boot CI] |
+|---|---|---|---|---|---|---|
+| denovo-ISA-1 | 7 (ISA-1, 0) | TARGET all | PFS | 39 / 40 | 0.15 | 0.62 [0.32, 1.16] |
+| denovo-ISA-1 | 7 (ISA-1, 0) | TARGET all | OS | 39 / 40 | 0.73 | 1.15 [0.54, 2.76] |
+| denovo-ISA-1 | 7 (ISA-1, 0) | TARGET non-metastatic | PFS | 29 / 30 | 0.042 | 0.42 [0.15, 1.00] |
+| denovo-ISA-1 | 7 (ISA-1, 0) | TARGET non-metastatic | OS | 29 / 30 | 0.68 | 0.80 [0.22, 2.72] (4/1000 resamples with a zero-event group) |
+| denovo-ISA-2 | 7 (ISA-2, 7) | TARGET all | PFS | 74 / 5 | 0.81 | 1.19 [0.11, not estimable] (117/1000 resamples with a zero-event group) |
+| denovo-ISA-2 | 7 (ISA-2, 7) | TARGET all | OS | 74 / 5 | 0.68 | 0.74 [0.05, not estimable] (118/1000 resamples with a zero-event group) |
+| denovo-ISA-2 | 7 (ISA-2, 7) | TARGET non-metastatic | PFS | 56 / 3 | 0.16 | not estimable (a group has no events) |
+| denovo-ISA-2 | 7 (ISA-2, 7) | TARGET non-metastatic | OS | 56 / 3 | 0.33 | not estimable (a group has no events) |
+| denovo-ISA-3 | 6 (ISA-4, 4) | TARGET all | PFS | 64 / 15 | 0.97 | 0.98 [0.47, 2.59] |
+| denovo-ISA-3 | 6 (ISA-4, 4) | TARGET all | OS | 64 / 15 | 0.96 | 0.98 [0.36, 3.34] (4/1000 resamples with a zero-event group) |
+| denovo-ISA-3 | 6 (ISA-4, 4) | TARGET non-metastatic | PFS | 46 / 13 | 0.68 | 0.82 [0.35, 2.46] |
+| denovo-ISA-3 | 6 (ISA-4, 4) | TARGET non-metastatic | OS | 46 / 13 | 0.94 | 1.05 [0.28, not estimable] (37/1000 resamples with a zero-event group) |
+| denovo-ISA-4 | 8 (ISA-1, 7) | TARGET all | PFS | 48 / 31 | 0.27 | 1.47 [0.74, 3.23] |
+| denovo-ISA-4 | 8 (ISA-1, 7) | TARGET all | OS | 48 / 31 | 0.58 | 1.25 [0.54, 3.33] |
+| denovo-ISA-4 | 8 (ISA-1, 7) | TARGET non-metastatic | PFS | 50 / 9 | 0.063 | 5.44 [1.25, not estimable] (364/1000 resamples with a zero-event group) |
+| denovo-ISA-4 | 8 (ISA-1, 7) | TARGET non-metastatic | OS | 50 / 9 | 0.12 | not estimable (a group has no events) |
+| denovo-ISA-5 | 5 (ISA-1, 0) | TARGET all | PFS | 44 / 35 | 0.51 | 1.25 [0.64, 2.53] |
+| denovo-ISA-5 | 5 (ISA-1, 0) | TARGET all | OS | 44 / 35 | 0.5 | 1.31 [0.56, 3.23] |
+| denovo-ISA-5 | 5 (ISA-1, 0) | TARGET non-metastatic | PFS | 34 / 25 | 0.23 | 1.67 [0.76, 4.95] |
+| denovo-ISA-5 | 5 (ISA-1, 0) | TARGET non-metastatic | OS | 34 / 25 | 0.26 | 1.94 [0.57, 10.29] (16/1000 resamples with a zero-event group) |
+| paperlab-ISA-1 | 28 (ISA-4, 28) | TARGET all | PFS | 63 / 16 | 0.46 | 1.39 [0.61, 4.63] (3/1000 resamples with a zero-event group) |
+| paperlab-ISA-1 | 28 (ISA-4, 28) | TARGET all | OS | 63 / 16 | 0.47 | 1.47 [0.54, 8.03] (18/1000 resamples with a zero-event group) |
+| paperlab-ISA-1 | 28 (ISA-4, 28) | TARGET non-metastatic | PFS | 46 / 13 | 0.95 | 0.97 [0.38, 4.06] (6/1000 resamples with a zero-event group) |
+| paperlab-ISA-1 | 28 (ISA-4, 28) | TARGET non-metastatic | OS | 46 / 13 | 0.68 | 0.76 [0.19, not estimable] (56/1000 resamples with a zero-event group) |
+| paperlab-ISA-2 | 20 (ISA-1, 19) | TARGET all | PFS | 48 / 31 | 0.11 | 1.77 [0.88, 3.96] |
+| paperlab-ISA-2 | 20 (ISA-1, 19) | TARGET all | OS | 48 / 31 | 0.32 | 1.52 [0.68, 4.15] |
+| paperlab-ISA-2 | 20 (ISA-1, 19) | TARGET non-metastatic | PFS | 38 / 21 | 0.017 | 3.42 [1.40, 15.22] (11/1000 resamples with a zero-event group) |
+| paperlab-ISA-2 | 20 (ISA-1, 19) | TARGET non-metastatic | OS | 38 / 21 | 0.091 | 3.43 [0.98, not estimable] (125/1000 resamples with a zero-event group) |
+| paperlab-ISA-3 | 17 (ISA-2, 17) | TARGET all | PFS | 74 / 5 | 0.81 | 1.19 [0.11, not estimable] (117/1000 resamples with a zero-event group) |
+| paperlab-ISA-3 | 17 (ISA-2, 17) | TARGET all | OS | 74 / 5 | 0.68 | 0.74 [0.05, not estimable] (118/1000 resamples with a zero-event group) |
+| paperlab-ISA-3 | 17 (ISA-2, 17) | TARGET non-metastatic | PFS | 56 / 3 | 0.16 | not estimable (a group has no events) |
+| paperlab-ISA-3 | 17 (ISA-2, 17) | TARGET non-metastatic | OS | 56 / 3 | 0.33 | not estimable (a group has no events) |
+| paperlab-ISA-4 | 13 (ISA-3, 13) | TARGET all | PFS | 53 / 26 | 0.024 | 2.50 [1.16, 7.82] (1/1000 resamples with a zero-event group) |
+| paperlab-ISA-4 | 13 (ISA-3, 13) | TARGET all | OS | 53 / 26 | 0.012 | 4.16 [1.73, not estimable] (42/1000 resamples with a zero-event group) |
+| paperlab-ISA-4 | 13 (ISA-3, 13) | TARGET non-metastatic | PFS | 36 / 23 | 0.16 | 1.94 [0.77, 7.19] |
+| paperlab-ISA-4 | 13 (ISA-3, 13) | TARGET non-metastatic | OS | 36 / 23 | 0.3 | 1.95 [0.60, not estimable] (47/1000 resamples with a zero-event group) |
+| paperlab-ISA-5 | 14 (ISA-1, 0) | TARGET all | PFS | 42 / 37 | 0.29 | 1.43 [0.71, 3.00] |
+| paperlab-ISA-5 | 14 (ISA-1, 0) | TARGET all | OS | 42 / 37 | 0.26 | 1.59 [0.72, 4.13] |
+| paperlab-ISA-5 | 14 (ISA-1, 0) | TARGET non-metastatic | PFS | 30 / 29 | 0.84 | 0.92 [0.39, 2.31] |
+| paperlab-ISA-5 | 14 (ISA-1, 0) | TARGET non-metastatic | OS | 30 / 29 | 0.38 | 0.61 [0.12, 2.02] (3/1000 resamples with a zero-event group) |
