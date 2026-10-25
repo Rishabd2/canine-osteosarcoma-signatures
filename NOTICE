@@ -1,0 +1,17 @@
+canine-osteosarcoma-signatures
+Copyright (c) 2026 Rishab Doshi. Original code is MIT licensed (see LICENSE).
+
+Third-party material
+--------------------
+R/authors_tmm_combat.R, R/limma_voom.R and R/isa_runs.R are adapted from scripts by
+Joshua Mannheimer and Amy LeBlanc, "Transcriptional profiling of canine osteosarcoma identifies
+prognostic gene expression signatures with translational values for humans", Zenodo,
+https://doi.org/10.5281/zenodo.8125077, licensed CC BY 4.0
+(https://creativecommons.org/licenses/by/4.0/). Changes are listed in each file's header.
+
+src/cos_sig/signatures.py transcribes Supplementary Table 3 of Mannheimer et al., Commun. Biol.
+6, 856 (2023), https://doi.org/10.1038/s42003-023-05208-z, CC BY 4.0. data/paper_reported_values.csv
+records values read from that article's figures.
+
+The authors' km_clust.py is downloaded at run time from Zenodo and patched in memory
+(src/cos_sig/authors.py); it is not redistributed here.

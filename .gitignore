@@ -1,0 +1,19 @@
+# downloaded inputs and intermediates (fetched by scripts/fetch_data.py, rebuilt by the pipeline)
+data/raw
+data/work
+*.part
+# python / os / editor junk
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.venv/
+venv/
+.DS_Store
+._*
+.ipynb_checkpoints/
+.Rhistory
+.RData
+# secrets
+.env
+*.pem
+*.key

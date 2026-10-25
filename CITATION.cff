@@ -1,0 +1,55 @@
+cff-version: 1.2.0
+message: "If you use this replication, please cite it and the original article."
+title: "canine-osteosarcoma-signatures: a replication of Mannheimer et al. 2023"
+type: software
+authors:
+  - family-names: Doshi
+    given-names: Rishab
+    email: rishabd2@illinois.edu
+license: MIT
+version: 1.0.0
+date-released: 2026-10-24
+keywords:
+  - osteosarcoma
+  - comparative oncology
+  - replication
+  - gene signatures
+  - survival analysis
+references:
+  - type: article
+    authors:
+      - family-names: Mannheimer
+        given-names: Joshua D.
+      - family-names: Tawa
+        given-names: Gregory
+      - family-names: Gerhold
+        given-names: David
+      - family-names: Braisted
+        given-names: John
+      - family-names: Sayers
+        given-names: Carly M.
+      - family-names: McEachron
+        given-names: Troy A.
+      - family-names: Meltzer
+        given-names: Paul
+      - family-names: Mazcko
+        given-names: Christina
+      - family-names: Beck
+        given-names: Jessica A.
+      - family-names: LeBlanc
+        given-names: Amy K.
+    title: "Transcriptional profiling of canine osteosarcoma identifies prognostic gene expression signatures with translational value for humans"
+    journal: "Communications Biology"
+    volume: 6
+    start: 856
+    year: 2023
+    doi: 10.1038/s42003-023-05208-z
+  - type: software
+    authors:
+      - family-names: Mannheimer
+        given-names: Joshua
+      - family-names: LeBlanc
+        given-names: Amy
+    title: "Transcriptional profiling of canine osteosarcoma identifies prognostic gene expression signatures with translational values for humans (code)"
+    year: 2023
+    doi: 10.5281/zenodo.8125077
