@@ -12,6 +12,7 @@ PY="${PY:-python}"
 "$PY" scripts/04_transfer_target.py     # verifies the frozen hash before reading TARGET
 "$PY" scripts/05_immune_pathways.py
 "$PY" scripts/06_sensitivity.py
+"$PY" scripts/09_one2one_orthologs.py
 "$PY" scripts/08_replication_table.py
 "$PY" scripts/07_figures.py
 "$PY" -m pytest -q

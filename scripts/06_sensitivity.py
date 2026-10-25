@@ -4,9 +4,10 @@
 2. k-means seed stability: adjusted Rand index of 50 single-start runs.
 3. Whole-pipeline bootstrap: resample patients, re-cluster (k = 2), re-test; the
    share of resamples with log-rank p < 0.05 says how often the finding recurs.
-4. Random-signature null in TARGET: 1000 random gene sets of the same size,
-   clustered the same way; empirical p = share of random sets whose log-rank p is
-   at or below the observed one.
+4. Random-signature null in TARGET: 1000 random gene sets of the same size, each
+   gene drawn from the same mean-expression bin (20 quantile bins) as the signature
+   gene it replaces, clustered the same way (k-means, k = 2, n_init = 10);
+   empirical p = share of random sets whose log-rank p is at or below the observed one.
 5. Leakage: the frozen de novo signatures verify against their sha256, and every
    human split uses orientation by signature score only.
 Writes results/sensitivity_*.csv.
@@ -114,24 +115,34 @@ def main() -> None:
             boot_rows.append({"cohort": cohort, "signature": sname, "endpoint": ep.upper(),
                               "share_p_lt_0.05": float(np.nanmean(p < 0.05)),
                               "median_p": float(np.nanmedian(p)), "n_resamples": N_PIPE_BOOT})
-        # 4. random-signature null (TARGET only)
+        # 4. random-signature null (TARGET only): expression-matched random gene sets,
+        #    clustered exactly like the real signature (k-means, k = 2, n_init = 10)
         if cohort.startswith("TARGET"):
-            pool = z.columns[(expr.mean(axis=1) > 1).reindex(z.columns).fillna(False).to_numpy()]
+            mean_expr = np.log2(expr.reindex(z.columns) + 2).mean(axis=1)
+            var_ok = z.std(axis=0) > 0
+            bins = pd.qcut(mean_expr[var_ok], 20, labels=False, duplicates="drop")
+            by_bin = {b: np.asarray(g.index) for b, g in bins.groupby(bins)}
+            sig_bins = bins.reindex(present).dropna().astype(int)
             obs_lab = kmeans_labels(x, 2, seed=SEED)
+            tt_all = {ep: (meta.loc[z.index, ep].to_numpy(float), meta.loc[z.index, f"{ep}_event"].to_numpy(int))
+                      for ep in eps}
+            nulls = {ep: [] for ep in eps}
+            for r in range(N_RANDOM):
+                g = []
+                for b_, cnt in sig_bins.value_counts().items():
+                    cand = np.setdiff1d(by_bin[b_], present)
+                    g.extend(rng.choice(cand, size=cnt, replace=False))
+                lab = kmeans_labels(z[g], 2, seed=r, n_init=10).to_numpy()
+                for ep in eps:
+                    nulls[ep].append(lr2(lab, *tt_all[ep]))
             for ep in eps:
                 obs = lr(obs_lab.astype(str), meta[ep], meta[f"{ep}_event"])
-                null = []
-                tt = meta.loc[z.index, ep].to_numpy(float)
-                ee = meta.loc[z.index, f"{ep}_event"].to_numpy(int)
-                for r in range(N_RANDOM):
-                    g = rng.choice(pool, size=len(present), replace=False)
-                    null.append(lr2(kmeans_labels(z[g], 2, seed=r, n_init=3).to_numpy(), tt, ee))
-                null = np.array(null)
+                null = np.array(nulls[ep])
                 null_rows.append({"cohort": cohort, "signature": sname, "endpoint": ep.upper(),
-                                  "genes": len(present), "observed_p": obs,
+                                  "genes": len(sig_bins), "observed_p": obs,
                                   "empirical_p": float((np.sum(null <= obs) + 1) / (len(null) + 1)),
                                   "share_random_p_lt_0.05": float(np.mean(null < 0.05)),
-                                  "n_random": N_RANDOM})
+                                  "n_random": N_RANDOM, "matching": "20 mean-expression bins, n_init=10"})
         print("done", cohort, sname, flush=True)
     pd.DataFrame(k_rows).to_csv(RESULTS / "sensitivity_k.csv", index=False)
     pd.DataFrame(stab_rows).to_csv(RESULTS / "sensitivity_seed_stability.csv", index=False)
