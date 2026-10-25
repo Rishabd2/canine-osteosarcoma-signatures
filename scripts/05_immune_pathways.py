@@ -163,7 +163,8 @@ def main() -> None:
     drows = []
     for sp, (tp, grp) in decon.items():
         for meth, est in [("MCP", mcp_counter(np.log2(tp + 1), mcp)), ("TIL10", til10_nnls(tp, til))]:
-            est.to_csv(RESULTS / f"deconv_{meth.lower()}_{sp}.csv.gz", float_format="%.6f")
+            est.to_csv(RESULTS / f"deconv_{meth.lower()}_{sp}.csv.gz", float_format="%.6f",
+                       compression={"method": "gzip", "mtime": 0})
             sub = []
             for cell in est.index:
                 fp = est.loc[cell, grp.index[grp == "FP"]]

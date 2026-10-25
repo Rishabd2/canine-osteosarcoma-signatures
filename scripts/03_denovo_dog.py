@@ -103,7 +103,8 @@ def main() -> None:
     lc_h = collapse_rows(lc_sym, pd.Series(hmap.reindex(lc_sym.index).values, index=lc_sym.index))
     hall = read_gmt(D / "ref" / "h.all.v7.5.1.symbols.gmt")
     ss = ssgsea(lc_h, hall, alpha=0.75)
-    ss.to_csv(RESULTS / "ssgsea_hallmark_dog.csv.gz", float_format="%.5f")
+    ss.to_csv(RESULTS / "ssgsea_hallmark_dog.csv.gz", float_format="%.5f",
+              compression={"method": "gzip", "mtime": 0})
     notes["ssgsea_sets_scored"] = int(ss.shape[0])
     zs = ((ss.T - ss.T.mean()) / ss.T.std(ddof=0))
     sil = kmeans_silhouette(zs, seed=SEED)

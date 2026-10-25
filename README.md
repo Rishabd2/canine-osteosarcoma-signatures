@@ -199,7 +199,7 @@ pip install -r requirements.txt
 Rscript R/install.R                      # after installing R, edgeR, limma, sva (see the file header)
 export RSCRIPT=$(which Rscript)
 python scripts/fetch_data.py             # GEO, GDC, Zenodo, supplementary data, references
-bash scripts/run_all.sh                  # about 40 minutes on an 8-core laptop
+bash scripts/run_all.sh                  # 16 minutes on an Apple M2 laptop after downloads
 python -m pytest -q
 ```
 
