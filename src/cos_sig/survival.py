@@ -86,29 +86,64 @@ def cox_beta_1d(time: np.ndarray, event: np.ndarray, x: np.ndarray, max_iter: in
     return float(beta)
 
 
-def bootstrap_hr(df: pd.DataFrame, exposed: str, reference: str, n_boot: int = 1000,
-                 seed: int = 0) -> tuple[float, float]:
+def bootstrap_hr_detail(df: pd.DataFrame, exposed: str, reference: str, n_boot: int = 1000,
+                        seed: int = 0, max_degenerate: float = 0.05) -> dict:
     """Percentile 95% CI for the HR, resampling patients with labels held fixed.
 
-    Replicates where one group has no events or vanishes are skipped.
+    Nothing is dropped silently. A resample where the reference group has no events
+    (and the exposed group has some) has HR = +inf; the reverse has HR = 0; both are
+    kept in the percentile calculation, so a bound that lands on them is reported as
+    not estimable (inf for the upper bound, 0 for the lower). Resamples where a group
+    vanishes or neither group has events are degenerate; if they exceed
+    ``max_degenerate`` of all resamples, both bounds are reported as not estimable (NaN).
     """
     rng = np.random.default_rng(seed)
     d = df[df.group.isin([exposed, reference])].reset_index(drop=True)
     x = (d.group == exposed).to_numpy(float)
     t = d.time.to_numpy(float)
     e = d.event.to_numpy(int)
-    vals = []
+    vals, n_inf, n_zero, n_degen = [], 0, 0, 0
     for _ in range(n_boot):
         i = rng.integers(0, len(d), len(d))
-        if x[i].min() == x[i].max() or e[i][x[i] == 1].sum() == 0 or e[i][x[i] == 0].sum() == 0:
+        xi, ei = x[i], e[i]
+        ev_exp, ev_ref = ei[xi == 1].sum(), ei[xi == 0].sum()
+        if xi.min() == xi.max() or (ev_exp == 0 and ev_ref == 0):
+            n_degen += 1
             continue
-        b = cox_beta_1d(t[i], e[i], x[i])
-        if np.isfinite(b) and abs(b) < 20:
-            vals.append(float(np.exp(b)))
-    if len(vals) < 0.5 * n_boot:
-        return float("nan"), float("nan")
-    lo, hi = np.percentile(vals, [2.5, 97.5])
-    return float(lo), float(hi)
+        if ev_ref == 0:
+            vals.append(np.inf)
+            n_inf += 1
+            continue
+        if ev_exp == 0:
+            vals.append(0.0)
+            n_zero += 1
+            continue
+        bta = cox_beta_1d(t[i], ei, xi)
+        if not np.isfinite(bta):
+            n_degen += 1
+        elif bta >= 20:
+            vals.append(np.inf)
+            n_inf += 1
+        elif bta <= -20:
+            vals.append(0.0)
+            n_zero += 1
+        else:
+            vals.append(float(np.exp(bta)))
+    out = {"lo": float("nan"), "hi": float("nan"), "n_inf": n_inf, "n_zero": n_zero, "n_degenerate": n_degen}
+    if not vals or n_degen > max_degenerate * n_boot:
+        return out
+    v = np.sort(np.array(vals))
+    n = v.size
+    out["lo"] = float(v[int(np.floor(0.025 * (n - 1)))])
+    out["hi"] = float(v[int(np.ceil(0.975 * (n - 1)))])
+    return out
+
+
+def bootstrap_hr(df: pd.DataFrame, exposed: str, reference: str, n_boot: int = 1000,
+                 seed: int = 0) -> tuple[float, float]:
+    """(lower, upper) from :func:`bootstrap_hr_detail`; inf / 0 mean not estimable."""
+    r = bootstrap_hr_detail(df, exposed, reference, n_boot=n_boot, seed=seed)
+    return r["lo"], r["hi"]
 
 
 def km_medians(df: pd.DataFrame) -> dict[str, float]:
@@ -130,6 +165,8 @@ class SplitStats:
     cox_p: float
     boot_lo: float
     boot_hi: float
+    boot_nonfinite: int
+    boot_degenerate: int
     medians: dict
 
 
@@ -142,12 +179,19 @@ def split_stats(groups: pd.Series, time: pd.Series, event: pd.Series, exposed: s
     if df.group.nunique() == 2 and {exposed, reference} <= set(df.group) and ev.min() == 0:
         # a group with no events: the Cox HR is infinite or zero, report it as not estimable
         hr = lo = hi = cp = blo = bhi = float("nan")
+        bnf = bdg = 0
     elif df.group.nunique() == 2 and {exposed, reference} <= set(df.group):
         hr, lo, hi, cp = cox_hr(df, exposed, reference)
-        blo, bhi = bootstrap_hr(df, exposed, reference, n_boot=n_boot, seed=seed) if n_boot else (np.nan, np.nan)
+        if n_boot:
+            bd = bootstrap_hr_detail(df, exposed, reference, n_boot=n_boot, seed=seed)
+            blo, bhi, bnf, bdg = bd["lo"], bd["hi"], bd["n_inf"] + bd["n_zero"], bd["n_degenerate"]
+        else:
+            blo = bhi = np.nan
+            bnf = bdg = 0
     else:
         hr = lo = hi = cp = blo = bhi = float("nan")
-    return SplitStats(n, p, hr, lo, hi, cp, blo, bhi, km_medians(df))
+        bnf = bdg = 0
+    return SplitStats(n, p, hr, lo, hi, cp, blo, bhi, bnf, bdg, km_medians(df))
 
 
 def bh_adjust(p) -> np.ndarray:

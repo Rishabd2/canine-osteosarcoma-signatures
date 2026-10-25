@@ -15,7 +15,8 @@ warnings.filterwarnings("ignore", module="lifelines")
 
 ROW_COLS = ["key", "claim", "cohort", "signature", "endpoint", "method", "group_a", "group_b", "n_a", "n_b",
             "k_silhouette", "genes_used", "logrank_p", "hr_a_vs_b", "hr_lo", "hr_hi", "boot_lo", "boot_hi",
-            "median_a", "median_b", "ari_vs_paper"]
+            "boot_nonfinite", "boot_degenerate", "median_a", "median_b", "ari_vs_paper",
+            "paper_label_of_a"]
 
 
 def cluster_on_signature(expr_lin: pd.DataFrame, genes: list[str], seed: int = 0,
@@ -40,11 +41,18 @@ def survival_row(key: str, claim: int, cohort: str, signature: str, endpoint: st
                  n_boot: int = 1000, seed: int = 0) -> dict:
     s = split_stats(groups, time, event, a, b, n_boot=n_boot, seed=seed)
     ari = np.nan
+    label_a = np.nan
     if paper_labels is not None:
         common = groups.index.intersection(paper_labels.dropna().index)
-        ari = adjusted_rand_score(paper_labels[common].astype(str), groups[common].astype(str))
+        pl = paper_labels[common].astype(str)
+        ari = adjusted_rand_score(pl, groups[common].astype(str))
+        in_a = pl[groups[common] == a]
+        # which paper group our group ``a`` mostly corresponds to (for HR direction checks)
+        label_a = in_a.value_counts().idxmax() if len(in_a) else np.nan
     return {"key": key, "claim": claim, "cohort": cohort, "signature": signature, "endpoint": endpoint,
             "method": method, "group_a": a, "group_b": b, "n_a": int(s.n.get(a, 0)), "n_b": int(s.n.get(b, 0)),
             "k_silhouette": k_sil, "genes_used": genes_used, "logrank_p": s.logrank_p, "hr_a_vs_b": s.hr,
             "hr_lo": s.hr_lo, "hr_hi": s.hr_hi, "boot_lo": s.boot_lo, "boot_hi": s.boot_hi,
-            "median_a": s.medians.get(a, np.nan), "median_b": s.medians.get(b, np.nan), "ari_vs_paper": ari}
+            "boot_nonfinite": s.boot_nonfinite, "boot_degenerate": s.boot_degenerate,
+            "median_a": s.medians.get(a, np.nan), "median_b": s.medians.get(b, np.nan), "ari_vs_paper": ari,
+            "paper_label_of_a": label_a}

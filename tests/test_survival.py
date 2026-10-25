@@ -89,3 +89,18 @@ def test_fast_logrank_matches_lifelines():
         a, b = g == "PP", g == "FP"
         ref = logrank_test(t[a], t[b], e[a], e[b]).p_value
         assert logrank_2group_fast(t.to_numpy(), e.to_numpy(), a.to_numpy().astype(int)) == pytest.approx(ref, rel=1e-9)
+
+
+def test_bootstrap_counts_zero_event_resamples_instead_of_dropping():
+    from cos_sig.survival import bootstrap_hr_detail
+    # 4 FP patients, only one FP event: many resamples leave FP with no events (HR = inf)
+    g = pd.Series(["PP"] * 16 + ["FP"] * 4)
+    t = pd.Series(list(range(10, 170, 10)) + [500, 600, 700, 800], dtype=float)
+    e = pd.Series([1] * 16 + [1, 0, 0, 0])
+    df = align_survival(g, t, e)
+    r = bootstrap_hr_detail(df, "PP", "FP", n_boot=500, seed=0)
+    assert r["n_inf"] > 0.05 * 500
+    # the upper bound is reported as not estimable (inf, or NaN when too many resamples
+    # are degenerate), never as a finite number computed from the surviving resamples
+    assert not np.isfinite(r["hi"])
+    assert r["n_inf"] + r["n_zero"] + r["n_degenerate"] <= 500
