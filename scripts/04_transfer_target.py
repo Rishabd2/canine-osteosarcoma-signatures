@@ -66,7 +66,7 @@ def main() -> None:
                     paper = None
                     if method == "rederived" and pi in {"1", "2", "3"}:
                         col = f"paper_isa{pi}_all" if cname == "TARGET all" else f"paper_isa{pi}_nonmet"
-                        paper = hm.loc[idx, col]
+                        paper = hm.loc[idx, col].astype(int)
                     rows.append(survival_row(key, 3, cname, sname, ep, method, groups, hm.loc[idx, tcol],
                                              hm.loc[idx, f"{tcol}_event"], a, b,
                                              k_sil=res["k_silhouette"] if method == "rederived" else np.nan,

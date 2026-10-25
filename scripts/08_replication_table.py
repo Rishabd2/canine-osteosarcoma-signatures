@@ -4,9 +4,12 @@ Agreement rule for survival tests, fixed before reading our numbers:
   yes      same call at p < 0.05 (both significant in the same direction, or both not)
   partial  same direction of effect, but one p is below 0.05 and the other is not
   no       opposite direction with at least one p < 0.05
-Direction is the sign of log HR (poor-prognosis or "1"/"high" group vs reference);
-the paper's direction is read from its reported medians, or from re-testing its
-own labels when medians are not informative.
+  different partition   our clusters overlap the paper's with ARI < 0.5, so the two
+                        p-values test different patient groupings
+Direction is the sign of log HR. The paper's direction is the HR from re-testing its
+own labels (Supplementary Data 1); our groups are matched to the paper's groups by
+majority overlap before comparing signs. Where the paper's labels are not public
+(non-metastatic GS splits), the paper's direction is FP better, as its text states.
 """
 from __future__ import annotations
 
@@ -29,10 +32,29 @@ def fmt_p(p) -> str:
     return f"{p:.2g}" if p >= 0.001 else f"{p:.1e}"
 
 
+def fmt_bound(v, side: str) -> str:
+    if v is None or (isinstance(v, float) and np.isnan(v)):
+        return "not estimable"
+    if side == "hi" and np.isinf(v):
+        return "not estimable"
+    if side == "lo" and v == 0:
+        return "not estimable"
+    return f"{v:.2f}"
+
+
 def fmt_hr(r) -> str:
     if r is None or np.isnan(r.hr_a_vs_b):
         return "not estimable (a group has no events)" if r is not None else "n/a"
-    return f"{r.hr_a_vs_b:.2f} [{r.boot_lo:.2f}, {r.boot_hi:.2f}]"
+    txt = f"{r.hr_a_vs_b:.2f} [{fmt_bound(r.boot_lo, 'lo')}, {fmt_bound(r.boot_hi, 'hi')}]"
+    nf = int(r.get("boot_nonfinite", 0) or 0)
+    if nf:
+        txt += f" ({nf}/1000 resamples with a zero-event group)"
+    return txt
+
+
+def norm_label(v) -> str:
+    s = str(v)
+    return s[:-2] if s.endswith(".0") else s
 
 
 def agree(paper_p, ours_p, same_dir) -> str:
@@ -40,6 +62,28 @@ def agree(paper_p, ours_p, same_dir) -> str:
     if ps == os_:
         return "yes" if (same_dir or not ps) else "no"
     return "partial" if same_dir else "no"
+
+
+def frozen_section(notes: dict) -> list[str]:
+    """Canine-derived signatures frozen before TARGET was read, applied to TARGET."""
+    ft = pd.read_csv(RESULTS / "claims_transfer_target.csv")
+    ft = ft[ft.signature.str.startswith(("denovo-", "paperlab-")) & (ft.method == "rederived")]
+    info = {k["name"]: k for tag in ("isa_denovo", "isa_paperlab") for k in notes.get(tag, {}).get("kept", [])}
+    n, hits = len(ft), int((ft.logrank_p < 0.05).sum())
+    out = ["", "## Frozen canine signatures in TARGET (leakage-safe test of claim 3)", "",
+           f"{len(info)} signatures derived from canine data only, hashed in `results/frozen_signatures.json`",
+           "before any human file was read, applied to TARGET all and non-metastatic (k-means, k = 2,",
+           f"high vs low by mean signature score), PFS and OS: {n} tests. {hits} reach p < 0.05, against",
+           f"{0.05 * n:.0f} expected by chance if none carried signal. `denovo` signatures come from our ssGSEA",
+           "clusters; `paperlab` signatures come from the paper's published ssGSEA clusters.", "",
+           "| Signature | Genes (closest published, shared) | Cohort | Endpoint | low / high n | p | HR low vs high [boot CI] |",
+           "|---|---|---|---|---|---|---|"]
+    for _, r in ft.iterrows():
+        k = info.get(r.signature, {})
+        out.append(f"| {r.signature} | {k.get('genes', '')} ({k.get('closest_published', '')}, "
+                   f"{k.get('overlap_with_closest', '')}) | {r.cohort} | {r.endpoint} | {r.n_a} / {r.n_b} | "
+                   f"{fmt_p(r.logrank_p)} | {fmt_hr(r)} |")
+    return out
 
 
 def main() -> None:
@@ -71,14 +115,24 @@ def main() -> None:
                     ours_kind = f"re-derived ({hit[0]['name']}, {hit[0]['overlap_with_closest']} shared genes)"
         if ours is None:
             continue
-        # paper direction: from re-testing the paper's labels when available, else HR > 1 by design
-        paper_dir = (pl.hr_a_vs_b > 1) if (pl is not None and np.isfinite(pl.hr_a_vs_b)) else True
-        if "ISA-" in pr.signature and pr.cohort.startswith("TARGET"):
-            same_dir = True  # cluster orientation in Figs 8-9 is not recoverable; judged on the call only
-        elif np.isfinite(ours.hr_a_vs_b):
-            same_dir = (ours.hr_a_vs_b > 1) == paper_dir
+        # paper direction from re-testing the paper's labels; ours matched to the paper's groups
+        if pl is not None and np.isfinite(pl.hr_a_vs_b):
+            paper_dir = pl.hr_a_vs_b > 1
+        elif pl is not None:  # zero-event group: direction from medians (FP never reaches its median)
+            paper_dir = True
+        else:
+            paper_dir = True  # paper text: higher signature enrichment = favorable
+        if np.isfinite(ours.hr_a_vs_b):
+            ours_dir = ours.hr_a_vs_b > 1
+            lab_a = norm_label(ours.get("paper_label_of_a", np.nan))
+            if pl is not None and lab_a not in ("nan", "") and lab_a != norm_label(pl.group_a):
+                ours_dir = not ours_dir  # our group a corresponds to the paper's group b
+            same_dir = ours_dir == paper_dir
         else:
             same_dir = True
+        call = agree(pr.paper_p, ours.logrank_p, same_dir)
+        if np.isfinite(ours.ari_vs_paper) and ours.ari_vs_paper < 0.5:
+            call = "different partition"
         out.append({
             "claim": pr.claim, "key": pr.key, "test": f"{pr.cohort}: {pr.signature}, {pr.endpoint}",
             "paper_groups": pr.n_groups, "paper_p": pr.paper_p, "paper_source": pr.source,
@@ -87,7 +141,7 @@ def main() -> None:
             "ours_p": ours.logrank_p, "ours_hr": fmt_hr(ours), "hr_groups": f"{ours.group_a} vs {ours.group_b}",
             "ari_vs_paper": ours.ari_vs_paper,
             "authors_code_p": ac.logrank_p if ac is not None else np.nan,
-            "agree": agree(pr.paper_p, ours.logrank_p, same_dir)})
+            "agree": call})
     t = pd.DataFrame(out)
     t["ours_q_bh"] = bh_adjust(t.ours_p.to_numpy())
     t.to_csv(RESULTS / "replication_table.csv", index=False)
@@ -101,7 +155,9 @@ def main() -> None:
              "assignments from Supplementary Data 1 against the paper's outcomes. ARI compares our",
              "clusters with the paper's.", "",
              "Agreement: **yes** = same call at p < 0.05; **partial** = same direction, call differs;",
-             "**no** = opposite direction.", ""]
+             "**no** = opposite direction; **different partition** = our clusters overlap the paper's",
+             "with ARI < 0.5. Bootstrap bounds that land on a resample where one group has no events",
+             "(HR infinite or zero) are reported as not estimable, with the count of such resamples.", ""]
     hdr = ("| Claim | Test | Paper groups | Paper p | Paper labels re-tested p | Ours | Our p (q) | HR [95% boot CI] |"
            " ARI vs paper | Agree |")
     lines += [hdr, "|" + "---|" * 10]
@@ -159,6 +215,7 @@ def main() -> None:
                  f"{gs['dog_fp_sets_also_sig_in_TARGET_all']} of {gs['DOG2']['ours_fp_sig']} "
                  f"(paper: 10 of 10). Sets enriched in PP at FDR < 0.05: "
                  + ", ".join(f"{c} {gs[c]['ours_pp_sig']}" for c in ["DOG2", "TARGET all"]) + " (paper: none).")
+    lines += frozen_section(notes)
     (RESULTS / "replication_table.md").write_text("\n".join(lines) + "\n")
     print("\n".join(lines))
 

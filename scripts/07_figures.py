@@ -186,18 +186,18 @@ def fig_summary():
     lp = lambda p: -np.log10(np.clip(p, 1e-6, 1))  # noqa: E731
     ax.axvline(lp(0.05), color=MUTED, lw=1, ls="--")
     ax.text(lp(0.05), len(t) - 0.2, " p = 0.05", color=MUTED, va="bottom", fontsize=8)
-    colors = {"yes": C_GOOD, "no": C_BAD, "partial": C_WARN}
+    colors = {"yes": C_GOOD, "no": C_BAD, "partial": C_WARN, "different partition": MUTED}
     for yi, (_, r) in zip(y, t.iterrows()):
         ax.plot([lp(r.paper_p), lp(r.ours_p)], [yi, yi], color="#d6d5cf", lw=1.5, zorder=1)
         ax.scatter(lp(r.paper_p), yi, s=40, facecolor=SURF, edgecolor=INK2, lw=1.4, zorder=2, marker="o")
         ax.scatter(lp(r.ours_p), yi, s=46, color=colors.get(r.agree, MUTED), zorder=3,
-                   marker={"yes": "o", "partial": "D", "no": "X"}.get(r.agree, "o"))
+                   marker={"yes": "o", "partial": "D", "no": "X", "different partition": "s"}.get(r.agree, "o"))
     ax.set_yticks(y)
     ax.set_yticklabels([f"C{int(r.claim)}  {r.test}" for _, r in t.iterrows()], fontsize=7.5)
     ax.set_xlabel("-log10 log-rank p   (open circle: paper; filled: this replication)")
     handles = [plt.Line2D([], [], marker=m, ls="", color=c, label=l, ms=7) for l, c, m in
                [("agrees (same call at p < 0.05)", C_GOOD, "o"), ("same direction, call differs", C_WARN, "D"),
-                ("does not agree", C_BAD, "X")]]
+                ("does not agree", C_BAD, "X"), ("different partition (ARI < 0.5)", MUTED, "s")]]
     ax.legend(handles=handles, loc="lower right", fontsize=8)
     ax.set_title("Replication agreement, survival tests", loc="left")
     fig.savefig(FIGURES / "replication_summary.png", dpi=150)
