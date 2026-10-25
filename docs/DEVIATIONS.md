@@ -96,8 +96,11 @@ public, is proprietary, or no longer installs.
 
 ## Added checks (not in the paper)
 
-17. Bootstrap CIs on every HR; BH across all replication p-values; k = 2..6 sensitivity;
-    seed stability of k-means; whole-pipeline bootstrap (re-cluster each resample);
-    random-signature null in TARGET; a frozen, hashed copy of the canine-derived signatures that
-    the human-transfer script verifies before running; and a static check that the canine
+17. Bootstrap CIs on every HR (resamples where one group has no events are kept as HR = inf
+    or 0 and a bound that lands on them is reported as not estimable, with the count);
+    BH across all replication p-values; k = 2..6 sensitivity; seed stability of k-means;
+    whole-pipeline bootstrap (re-cluster each resample); an expression-matched random-signature
+    null in TARGET (k-means with 10 starts); a one-to-one-orthologs-only re-run of every
+    cross-species step; a frozen, hashed copy of the canine-derived signatures that the
+    human-transfer script verifies before running; and a static check that the canine
     derivation script never opens human data.
