@@ -78,21 +78,27 @@ Claim by claim:
   genes) plus a fifth myeloid bicluster; the ISA-4-like bicluster is again the only one with a DFI
   difference (p = 0.020). Run on our own ssGSEA clusters, the DEG list (94 genes) has no immune
   genes and ISA returns osteoclast, muscle, cartilage and stromal biclusters instead.
-- **Claim 3 replicates for the full TARGET cohort and fails in the metastatic subgroup.** GS-2 and
-  ISA-3 give cluster assignments identical to the paper's and the same p-values. GS-1 moves one
+- **Claim 3 reproduces for the full TARGET cohort when the paper's published signatures are
+  used, but only ISA-3 holds up under the sensitivity checks, and it fails in the metastatic
+  subgroup.** GS-2 and ISA-3 give cluster assignments identical to the paper's and the same
+  p-values; against an expression-matched random-signature null only ISA-3 stands out
+  (empirical p = 0.017), and non-metastatic ISA-1 (p = 0.041) loses significance with one-to-one
+  orthologs (0.11). GS-1 moves one
   patient and PFS goes from 0.047 to 0.080. In the 20 metastatic patients, our GS-1 clusters move
   one patient and lose significance; our GS-2 clusters are a different partition (ARI 0.13). The
   non-metastatic ISA-3 result depends on k-means landing on a balanced split; ours isolates two
   patients.
   The leakage-safe version of this claim, signatures derived from dogs alone and frozen before
-  TARGET was opened, is weaker: 4 of 40 tests reach p < 0.05, about twice the 2 expected by
-  chance, led by our dog-only re-derivation of the immune ISA-3 signature (PFS 0.024, OS 0.012).
+  TARGET was opened, is weaker: 4 of 40 tests reach p < 0.05, from 3 distinct signatures, led
+  by our dog-only re-derivation of the immune ISA-3 signature (PFS 0.024, OS 0.012). With
+  one-to-one orthologs only, its PFS result goes to 0.084, hits drop to 3 of 40, and the
+  clean-transfer evidence for the immune signature rests on OS alone (0.016).
 - **Claim 4 replicates for pathways and CD8 T cells, and partly for macrophages.** The immune
   Hallmark sets enriched in FP are almost the same sets the paper lists in both species; GS-1 FP
   vs PP DEGs shared across DOG2, TARGET and TARGET non-metastatic number 85 (paper: 84) and are
   enriched for PD-1 signalling, TCR signalling, CD28 co-stimulation and interferon-gamma
-  signalling in Reactome. CD8 T cell and total monocyte-lineage scores are higher in FP in both
-  species. M2 macrophages go the paper's way in humans and the opposite way in dogs with TIL10;
+  signalling in Reactome. MCP-counter CD8 T cell and monocyte-lineage scores are higher in FP in
+  both species (with TIL10, human CD8 does not reach significance, q = 0.16). M2 macrophages go the paper's way in humans and the opposite way in dogs with TIL10;
   the paper's strongest cell-type result (M0 macrophages higher in PP) cannot be tested with an
   open method because none of them models an M0 state.
 
@@ -105,7 +111,12 @@ paper's published ssGSEA clusters (`paperlab`). Their gene lists are hashed in
 `results/frozen_signatures.json`, and `scripts/04_transfer_target.py` refuses to run if the hash
 changes. Each was applied to TARGET all and non-metastatic, for PFS and OS: 40 tests.
 
-**4 of the 40 reach p < 0.05, about twice the 2 expected by chance if none carried signal.** The
+**4 of the 40 reach p < 0.05, from 3 distinct signatures.** A naive count would compare 4 with
+the 2 expected by chance, but the 40 tests are not independent: PFS and OS share each
+partition, and denovo-ISA-2 and paperlab-ISA-3 produce the same partition, so this is 3
+signatures out of 10 with at least one hit, not 4 independent successes. With one-to-one
+orthologs only, paperlab-ISA-4 PFS goes from 0.024 to 0.084, hits drop to 3 of 40, and the
+clean-transfer evidence for the immune signature rests on OS alone (p = 0.016). The
 strongest is paperlab-ISA-4, our dog-only re-derivation of the immune ISA-3 signature (13 of its
 15 genes), in TARGET all: PFS p = 0.024 and OS p = 0.012, low-immune worse (HR 2.50 [1.16, 7.82]
 for PFS). The other two are paperlab-ISA-2 (stromal, close to ISA-1) for non-metastatic PFS
@@ -292,18 +303,21 @@ of the data. The check that changed my reading most was the random-signature nul
 sets of the same size split survival at p < 0.05 in 3% to 18% of draws, so a p of 0.02 to 0.05
 from one signature is weak evidence on its own; only ISA-3 clearly beats that baseline.
 The frozen-signature test points the same way. When I derived signatures from dogs alone and
-locked them before opening TARGET, 4 of 40 human tests came in under 0.05, about twice what
-chance gives, and the clearest of them was again the immune signature. That is some transfer,
-not a lot, and the gene lists that transferred depended on which canine clustering they came from.
+locked them before opening TARGET, 3 of 10 signatures had at least one human test under 0.05
+(4 of 40 correlated tests), and the clearest was again the immune signature. That hit is
+fragile: with one-to-one orthologs only, its PFS result rises to 0.084 and the evidence rests on
+OS alone (0.016). That is weak transfer at best, and the gene lists involved depended on which
+canine clustering they came from.
 The M2 macrophage direction flipped between species with an open deconvolution
 method, and M0, the paper's strongest cell-type result, cannot be checked without CIBERSORTx.
 
 For using dog data to inform human trials, my read is this. The shared immune program is the
-part that replicates most strongly: an immune-hot transcriptional state, with higher MCP-counter
-CD8 T cell and monocytic-lineage scores and interferon and allograft-rejection signalling, goes
-with better outcome in both species, in a dog cohort with standardized treatment. That makes it
-a prognostic marker under chemotherapy; whether it predicts immunotherapy benefit is untested
-here. The specific gene lists and
+part that replicates most strongly as biology: an immune-hot transcriptional state, with higher
+MCP-counter CD8 T cell and monocytic-lineage scores and interferon and allograft-rejection
+signalling, marks the favorable cluster in both species, in a dog cohort with standardized
+treatment. Its link to outcome is weaker than its biology: nominal in dogs (GS-1 DFI p = 0.011,
+q = 0.066 after BH) and, in humans, clear only for ISA-3. That makes it a candidate prognostic
+marker under chemotherapy; whether it predicts immunotherapy benefit is untested here. The specific gene lists and
 the k-means cut points are fragile, and their p-values are near the threshold in cohorts of 79
 and 186. If the immune axis were used to stratify a trial, I would want it as a continuous,
 pre-specified score with a fixed threshold, validated in an independent human cohort, rather
