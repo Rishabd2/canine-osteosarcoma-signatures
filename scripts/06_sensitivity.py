@@ -28,7 +28,7 @@ from cos_sig.orthologs import map_signature  # noqa: E402
 from cos_sig.paths import RESULTS, data_dir, work_dir  # noqa: E402
 from cos_sig.scoring import log_zscore, signature_genes_present  # noqa: E402
 from cos_sig.signatures import PUBLISHED_ISA, load_frozen, published_gs  # noqa: E402
-from cos_sig.survival import align_survival, logrank_p  # noqa: E402
+from cos_sig.survival import align_survival, logrank_2group_fast, logrank_p  # noqa: E402
 from sklearn.metrics import silhouette_score  # noqa: E402
 
 warnings.filterwarnings("ignore")
@@ -40,6 +40,11 @@ N_RANDOM = 1000
 
 def lr(labels, time, event) -> float:
     return logrank_p(align_survival(labels, time, event))
+
+
+def lr2(labels: np.ndarray, time: np.ndarray, event: np.ndarray) -> float:
+    """Fast two-group log-rank for resampling loops (labels 0/1, arrays aligned)."""
+    return logrank_2group_fast(time, event, labels)
 
 
 def main() -> None:
@@ -67,13 +72,14 @@ def main() -> None:
         ("TARGET non-metastatic", "ISA-3", ht[nonmet], hg(PUBLISHED_ISA["ISA-3"]), hm.loc[nonmet], ["pfs"]),
         ("TARGET all", "ISA-4", ht, hg(PUBLISHED_ISA["ISA-4"]), hm, ["pfs"]),
     ]
+    n_primary = len(cases)  # resampling checks run on the paper's signatures only
     for name, genes in frozen.items():
         cases.append(("TARGET all", name, ht, hg(genes), hm, ["pfs", "os"]))
         cases.append(("TARGET non-metastatic", name, ht[nonmet], hg(genes), hm.loc[nonmet], ["pfs"]))
 
     k_rows, stab_rows, boot_rows, null_rows = [], [], [], []
     rng = np.random.default_rng(SEED)
-    for cohort, sname, expr, genes, meta, eps in cases:
+    for ci, (cohort, sname, expr, genes, meta, eps) in enumerate(cases):
         z = log_zscore(expr)
         present, _ = signature_genes_present(genes, z.columns)
         x = z[present]
@@ -88,6 +94,9 @@ def main() -> None:
             k_rows.append(row)
         # 2. seed stability
         stab_rows.append({"cohort": cohort, "signature": sname, "genes": len(present), **seed_stability(x, 2)})
+        if ci >= n_primary:
+            print("done", cohort, sname, flush=True)
+            continue
         # 3. whole-pipeline bootstrap (re-z-score and re-cluster each resample)
         ids = np.asarray(expr.columns)
         hits = {ep: [] for ep in eps}
@@ -96,11 +105,10 @@ def main() -> None:
             e = expr[pick]
             e.columns = [f"{c}#{i}" for i, c in enumerate(pick)]
             zb = log_zscore(e)[present]
-            lab = kmeans_labels(zb, 2, seed=b, n_init=5)
-            m = meta.loc[pick].copy()
-            m.index = e.columns
+            lab = kmeans_labels(zb, 2, seed=b, n_init=5).to_numpy()
+            m = meta.loc[pick]
             for ep in eps:
-                hits[ep].append(lr(lab.astype(str), m[ep], m[f"{ep}_event"]))
+                hits[ep].append(lr2(lab, m[ep].to_numpy(float), m[f"{ep}_event"].to_numpy(int)))
         for ep in eps:
             p = np.array(hits[ep])
             boot_rows.append({"cohort": cohort, "signature": sname, "endpoint": ep.upper(),
@@ -113,10 +121,11 @@ def main() -> None:
             for ep in eps:
                 obs = lr(obs_lab.astype(str), meta[ep], meta[f"{ep}_event"])
                 null = []
+                tt = meta.loc[z.index, ep].to_numpy(float)
+                ee = meta.loc[z.index, f"{ep}_event"].to_numpy(int)
                 for r in range(N_RANDOM):
                     g = rng.choice(pool, size=len(present), replace=False)
-                    null.append(lr(kmeans_labels(z[g], 2, seed=r, n_init=3).astype(str), meta[ep],
-                                   meta[f"{ep}_event"]))
+                    null.append(lr2(kmeans_labels(z[g], 2, seed=r, n_init=3).to_numpy(), tt, ee))
                 null = np.array(null)
                 null_rows.append({"cohort": cohort, "signature": sname, "endpoint": ep.upper(),
                                   "genes": len(present), "observed_p": obs,

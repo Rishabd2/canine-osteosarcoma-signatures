@@ -80,3 +80,12 @@ def test_bh_adjust_known_values():
     q = bh_adjust(p)
     np.testing.assert_allclose(q[[0, 1, 2, 4]], [0.04, 0.05333333, 0.05333333, 0.5])
     assert np.isnan(q[3])
+
+
+def test_fast_logrank_matches_lifelines():
+    from cos_sig.survival import logrank_2group_fast
+    for seed in range(3):
+        g, t, e = _toy(seed=seed)
+        a, b = g == "PP", g == "FP"
+        ref = logrank_test(t[a], t[b], e[a], e[b]).p_value
+        assert logrank_2group_fast(t.to_numpy(), e.to_numpy(), a.to_numpy().astype(int)) == pytest.approx(ref, rel=1e-9)

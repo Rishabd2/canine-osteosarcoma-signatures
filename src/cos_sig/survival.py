@@ -166,3 +166,32 @@ def bh_adjust(p) -> np.ndarray:
     res[order] = np.minimum(ranked, 1.0)
     out[ok] = res
     return out
+
+
+def logrank_2group_fast(time: np.ndarray, event: np.ndarray, g: np.ndarray) -> float:
+    """Two-group log-rank p-value in NumPy (same statistic as lifelines.logrank_test).
+
+    ``g`` is a 0/1 array. Used inside resampling loops where lifelines is too slow.
+    """
+    from scipy.stats import chi2
+
+    t = np.asarray(time, float)
+    e = np.asarray(event, int)
+    g = np.asarray(g, int)
+    if g.min() == g.max():
+        return float("nan")
+    ut = np.unique(t[e == 1])
+    order = np.argsort(t)
+    ts = t[order]
+    n_at = len(t) - np.searchsorted(ts, ut, side="left")
+    n1_at = np.array([np.sum((t >= u) & (g == 1)) for u in ut])
+    d = np.array([np.sum((t == u) & (e == 1)) for u in ut])
+    d1 = np.array([np.sum((t == u) & (e == 1) & (g == 1)) for u in ut])
+    exp1 = d * n1_at / n_at
+    with np.errstate(invalid="ignore", divide="ignore"):
+        var = np.where(n_at > 1, d * (n1_at / n_at) * (1 - n1_at / n_at) * (n_at - d) / (n_at - 1), 0.0)
+    v = var.sum()
+    if v <= 0:
+        return float("nan")
+    stat = (d1.sum() - exp1.sum()) ** 2 / v
+    return float(chi2.sf(stat, 1))
