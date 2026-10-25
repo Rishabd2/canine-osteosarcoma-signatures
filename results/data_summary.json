@@ -1,0 +1,38 @@
+{
+ "dog_primary_tumour_columns_in_geo": 190,
+ "dog_samples_matched_to_source_data": 186,
+ "dog_probes_total": 37952,
+ "dog_probes_after_filterByExpr": 13419,
+ "dog_probes_without_gtf_length": 0,
+ "dog_genes_after_collapse_and_LOC_removal": 12258,
+ "dog_trial_counts": {
+  "COTC022": 93,
+  "COTC021": 93
+ },
+ "dog_trial_equals_arm": true,
+ "dog_dfi_events": 143,
+ "dog_os_events": 124,
+ "target_star_files": 88,
+ "target_samples_used": 79,
+ "target_samples_missing_from_gdc": [],
+ "target_protein_coding_genes": 19986,
+ "target_metastatic": 20,
+ "target_nonmetastatic": 59,
+ "target_gdc_metastasis_values": {
+  "No Metastasis": 59,
+  "Metastasis, NOS": 20
+ },
+ "target_metastatic_agrees_with_gdc": 79,
+ "target_os_event_agrees_with_gdc_vital_status": 79,
+ "target_pfs_events": 37,
+ "target_os_events": 26,
+ "ensembl_release": [
+  116
+ ],
+ "ortholog_methods": {
+  "ensembl_best": 751,
+  "ensembl_one2one": 14583,
+  "identity": 1693,
+  "unmapped": 20264
+ }
+}

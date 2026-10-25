@@ -1,0 +1,286 @@
+{
+ "logcpm_probes": 13419,
+ "logcpm_genes_after_collapse": 12258,
+ "ssgsea_sets_scored": 50,
+ "ssgsea_kmeans": {
+  "k_silhouette": 2,
+  "silhouettes": {
+   "2": 0.19277540502936077,
+   "3": 0.1451925818871287,
+   "4": 0.1126347604638498,
+   "5": 0.10689503696827589,
+   "6": 0.1054565980478887
+  },
+  "sizes": {
+   "FP": 116,
+   "PP": 70
+  },
+  "ari_vs_paper": 0.5481488386419547
+ },
+ "ssgsea_degs_denovo": {
+  "n_adjP_lt_0.05_probes": 7646,
+  "n_adjP_and_absFC_gt_3_probes": 109,
+  "n_genes": 94,
+  "overlap_GS1": 0,
+  "overlap_GS2": 5
+ },
+ "isa_denovo": {
+  "runs": 25,
+  "biclusters_total": 177,
+  "groups": 10,
+  "groups_kept_gt_75pct": 5,
+  "kept": [
+   {
+    "name": "denovo-ISA-1",
+    "genes": 7,
+    "samples": 45,
+    "frac_runs": 1.0,
+    "closest_published": "ISA-1",
+    "overlap_with_closest": 0,
+    "jaccard_with_closest": 0.0,
+    "genes_list": [
+     "ACP5",
+     "ATP6V0D2",
+     "DCSTAMP",
+     "MMP9",
+     "NYAP2",
+     "SERPINB12",
+     "SIGLEC15"
+    ]
+   },
+   {
+    "name": "denovo-ISA-2",
+    "genes": 7,
+    "samples": 33,
+    "frac_runs": 1.0,
+    "closest_published": "ISA-2",
+    "overlap_with_closest": 7,
+    "jaccard_with_closest": 0.3684210526315789,
+    "genes_list": [
+     "ACTA1",
+     "CKM",
+     "MYBPC1",
+     "MYH2",
+     "NRAP",
+     "PDK4",
+     "PDLIM3"
+    ]
+   },
+   {
+    "name": "denovo-ISA-3",
+    "genes": 6,
+    "samples": 43,
+    "frac_runs": 1.0,
+    "closest_published": "ISA-4",
+    "overlap_with_closest": 4,
+    "jaccard_with_closest": 0.0975609756097561,
+    "genes_list": [
+     "COL2A1",
+     "COL9A1",
+     "EPHB2",
+     "FGFR3",
+     "IHH",
+     "PPP1R1B"
+    ]
+   },
+   {
+    "name": "denovo-ISA-4",
+    "genes": 8,
+    "samples": 43,
+    "frac_runs": 0.96,
+    "closest_published": "ISA-1",
+    "overlap_with_closest": 7,
+    "jaccard_with_closest": 0.23333333333333334,
+    "genes_list": [
+     "ABCA8",
+     "C3",
+     "CFD",
+     "GPRC5A",
+     "MEDAG",
+     "PI16",
+     "PRG4",
+     "RARRES2"
+    ]
+   },
+   {
+    "name": "denovo-ISA-5",
+    "genes": 5,
+    "samples": 46,
+    "frac_runs": 0.92,
+    "closest_published": "ISA-1",
+    "overlap_with_closest": 0,
+    "jaccard_with_closest": 0.0,
+    "genes_list": [
+     "CCDC3",
+     "FAM180A",
+     "FMOD",
+     "LAMA3",
+     "PRELP"
+    ]
+   }
+  ]
+ },
+ "ssgsea_degs_paperlab": {
+  "n_adjP_lt_0.05_probes": 7325,
+  "n_adjP_and_absFC_gt_3_probes": 234,
+  "n_genes": 190,
+  "overlap_GS1": 13,
+  "overlap_GS2": 40
+ },
+ "isa_paperlab": {
+  "runs": 25,
+  "biclusters_total": 154,
+  "groups": 7,
+  "groups_kept_gt_75pct": 5,
+  "kept": [
+   {
+    "name": "paperlab-ISA-1",
+    "genes": 28,
+    "samples": 55,
+    "frac_runs": 1.0,
+    "closest_published": "ISA-4",
+    "overlap_with_closest": 28,
+    "jaccard_with_closest": 0.717948717948718,
+    "genes_list": [
+     "AQP5",
+     "BARX1",
+     "BPIFB4",
+     "CACNG7",
+     "COL2A1",
+     "DIPK1C",
+     "DLX1",
+     "DPYSL5",
+     "DUOX1",
+     "FADS6",
+     "FGFR3",
+     "GRIA2",
+     "GRM4",
+     "HORMAD1",
+     "HOXB13",
+     "HOXC13",
+     "IGF2BP1",
+     "IHH",
+     "IRX1",
+     "LHX2",
+     "NDNF",
+     "PPP1R1B",
+     "RAB27B",
+     "SCML2",
+     "SLC9A2",
+     "SMPD3",
+     "SYT13",
+     "TBC1D16"
+    ]
+   },
+   {
+    "name": "paperlab-ISA-2",
+    "genes": 20,
+    "samples": 45,
+    "frac_runs": 1.0,
+    "closest_published": "ISA-1",
+    "overlap_with_closest": 19,
+    "jaccard_with_closest": 0.6333333333333333,
+    "genes_list": [
+     "A4GALT",
+     "ABCA8",
+     "ABI3BP",
+     "CFD",
+     "CFH",
+     "CHRDL1",
+     "CXCL14",
+     "GPRC5A",
+     "LSP1",
+     "MEDAG",
+     "MEOX1",
+     "MFAP4",
+     "MFAP5",
+     "PI16",
+     "PRG4",
+     "RARRES2",
+     "SEMA3C",
+     "SLC14A1",
+     "THBS4",
+     "VGLL3"
+    ]
+   },
+   {
+    "name": "paperlab-ISA-3",
+    "genes": 17,
+    "samples": 38,
+    "frac_runs": 1.0,
+    "closest_published": "ISA-2",
+    "overlap_with_closest": 17,
+    "jaccard_with_closest": 0.8947368421052632,
+    "genes_list": [
+     "ACTA1",
+     "CKM",
+     "KLHL41",
+     "MYBPC1",
+     "MYH1",
+     "MYH2",
+     "MYL1",
+     "MYL2",
+     "NEB",
+     "NRAP",
+     "PDK4",
+     "PDLIM3",
+     "PYGM",
+     "RYR1",
+     "TMOD4",
+     "TNNT1",
+     "TNNT3"
+    ]
+   },
+   {
+    "name": "paperlab-ISA-4",
+    "genes": 13,
+    "samples": 42,
+    "frac_runs": 1.0,
+    "closest_published": "ISA-3",
+    "overlap_with_closest": 13,
+    "jaccard_with_closest": 0.8666666666666667,
+    "genes_list": [
+     "CD3E",
+     "CLEC2D",
+     "CXCR6",
+     "GBP1",
+     "GBP5",
+     "GIMAP7",
+     "GIMAP8",
+     "GZMB",
+     "GZMK",
+     "IL2RB",
+     "IL2RG",
+     "SECTM1",
+     "TBC1D10C"
+    ]
+   },
+   {
+    "name": "paperlab-ISA-5",
+    "genes": 14,
+    "samples": 38,
+    "frac_runs": 0.96,
+    "closest_published": "ISA-1",
+    "overlap_with_closest": 0,
+    "jaccard_with_closest": 0.0,
+    "genes_list": [
+     "AQP9",
+     "BCL2A1",
+     "C17H1orf162",
+     "CD1A8",
+     "CD4",
+     "CSF3R",
+     "FFAR2",
+     "ITGAM",
+     "MARCO",
+     "PTAFR",
+     "S100A12",
+     "S100A9",
+     "SAMSN1",
+     "SNX20"
+    ]
+   }
+  ]
+ },
+ "frozen_sha256": "6ed837fb99a2f669985b92a00c47bfa9327f81dbbb48592a8602dbf1f7f3bf9e"
+}

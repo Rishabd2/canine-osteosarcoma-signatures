@@ -1,0 +1,17 @@
+{
+ "frozen_sha256_verified": true,
+ "frozen_signatures": {
+  "denovo-ISA-1": 7,
+  "denovo-ISA-2": 7,
+  "denovo-ISA-3": 6,
+  "denovo-ISA-4": 8,
+  "denovo-ISA-5": 5,
+  "paperlab-ISA-1": 28,
+  "paperlab-ISA-2": 20,
+  "paperlab-ISA-3": 17,
+  "paperlab-ISA-4": 13,
+  "paperlab-ISA-5": 14
+ },
+ "orientation_rule": "FP/high = cluster with the higher mean signature z-score; outcome not used",
+ "human_data_read_by_derivation_script": false
+}

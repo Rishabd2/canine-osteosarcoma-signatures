@@ -1,0 +1,193 @@
+{
+ "gsea": {
+  "DOG2": {
+   "ours_fp_sig": 12,
+   "paper_fp_sig": 10,
+   "overlap": 10,
+   "ours": [
+    "ALLOGRAFT_REJECTION",
+    "APOPTOSIS",
+    "COMPLEMENT",
+    "IL2_STAT5",
+    "IL6_JAK_STAT3",
+    "INFLAMMATORY",
+    "INTERFERON_ALPHA",
+    "INTERFERON_GAMMA",
+    "KRAS_UP",
+    "REACTIVE_OXYGEN_SPECIES_PATHWAY",
+    "TNFA",
+    "XENOBIOTIC_METABOLISM"
+   ],
+   "paper": [
+    "ALLOGRAFT_REJECTION",
+    "COMPLEMENT",
+    "IL2_STAT5",
+    "IL6_JAK_STAT3",
+    "INFLAMMATORY",
+    "INTERFERON_ALPHA",
+    "INTERFERON_GAMMA",
+    "KRAS_UP",
+    "TNFA",
+    "XENOBIOTIC_METABOLISM"
+   ],
+   "ours_pp_sig": 0
+  },
+  "TARGET all": {
+   "ours_fp_sig": 10,
+   "paper_fp_sig": 13,
+   "overlap": 10,
+   "ours": [
+    "ALLOGRAFT_REJECTION",
+    "APOPTOSIS",
+    "COMPLEMENT",
+    "IL2_STAT5",
+    "IL6_JAK_STAT3",
+    "INFLAMMATORY",
+    "INTERFERON_ALPHA",
+    "INTERFERON_GAMMA",
+    "KRAS_UP",
+    "TNFA"
+   ],
+   "paper": [
+    "ALLOGRAFT_REJECTION",
+    "APOPTOSIS",
+    "COMPLEMENT",
+    "IL2_STAT5",
+    "IL6_JAK_STAT3",
+    "INFLAMMATORY",
+    "INTERFERON_ALPHA",
+    "INTERFERON_GAMMA",
+    "KRAS_UP",
+    "P53_PATHWAY",
+    "REACTIVE_OXYGEN_SPECIES_PATHWAY",
+    "TNFA",
+    "XENOBIOTIC_METABOLISM"
+   ],
+   "ours_pp_sig": 0
+  },
+  "TARGET non-metastatic": {
+   "ours_fp_sig": 11,
+   "paper_fp_sig": 11,
+   "overlap": 10,
+   "ours": [
+    "ALLOGRAFT_REJECTION",
+    "APOPTOSIS",
+    "COMPLEMENT",
+    "IL2_STAT5",
+    "IL6_JAK_STAT3",
+    "INFLAMMATORY",
+    "INTERFERON_ALPHA",
+    "INTERFERON_GAMMA",
+    "KRAS_UP",
+    "REACTIVE_OXYGEN_SPECIES_PATHWAY",
+    "TNFA"
+   ],
+   "paper": [
+    "ALLOGRAFT_REJECTION",
+    "APOPTOSIS",
+    "COMPLEMENT",
+    "IL2_STAT5",
+    "IL6_JAK_STAT3",
+    "INFLAMMATORY",
+    "INTERFERON_ALPHA",
+    "INTERFERON_GAMMA",
+    "KRAS_UP",
+    "P53_PATHWAY",
+    "TNFA"
+   ],
+   "ours_pp_sig": 0
+  },
+  "TARGET metastatic": {
+   "ours_fp_sig": 5,
+   "paper_fp_sig": 7,
+   "overlap": 5,
+   "ours": [
+    "ALLOGRAFT_REJECTION",
+    "COMPLEMENT",
+    "IL6_JAK_STAT3",
+    "INFLAMMATORY",
+    "KRAS_UP"
+   ],
+   "paper": [
+    "ALLOGRAFT_REJECTION",
+    "COMPLEMENT",
+    "IL6_JAK_STAT3",
+    "INFLAMMATORY",
+    "INTERFERON_ALPHA",
+    "INTERFERON_GAMMA",
+    "KRAS_UP"
+   ],
+   "ours_pp_sig": 0
+  },
+  "dog_fp_sets_also_sig_in_TARGET_all": 10
+ },
+ "degs": {
+  "DOG2": 256,
+  "TARGET all": 246,
+  "TARGET non-metastatic": 267,
+  "TARGET metastatic": 1,
+  "shared_three_sets": 85,
+  "paper_dog": 317,
+  "paper_target_all": 281,
+  "paper_target_nonmet": 321,
+  "paper_shared": 84,
+  "reactome_fdr_lt_0.05": 25,
+  "reactome_top": [
+   {
+    "term": "REACTOME_PD_1_SIGNALING",
+    "overlap": 7,
+    "fdr": 2.3554239886939144e-09
+   },
+   {
+    "term": "REACTOME_GENERATION_OF_SECOND_MESSENGER_MOLECULES",
+    "overlap": 8,
+    "fdr": 2.3554239886939144e-09
+   },
+   {
+    "term": "REACTOME_IMMUNOREGULATORY_INTERACTIONS_BETWEEN_A_LYMPHOID_AND_A_NON_LYMPHOID_CELL",
+    "overlap": 9,
+    "fdr": 4.202714498657779e-08
+   },
+   {
+    "term": "REACTOME_CLASS_A_1_RHODOPSIN_LIKE_RECEPTORS",
+    "overlap": 10,
+    "fdr": 6.858800905911514e-08
+   },
+   {
+    "term": "REACTOME_GPCR_LIGAND_BINDING",
+    "overlap": 11,
+    "fdr": 3.559539740111867e-07
+   },
+   {
+    "term": "REACTOME_INTERFERON_GAMMA_SIGNALING",
+    "overlap": 8,
+    "fdr": 1.3265530012046093e-06
+   },
+   {
+    "term": "REACTOME_PEPTIDE_LIGAND_BINDING_RECEPTORS",
+    "overlap": 7,
+    "fdr": 2.785221259061845e-06
+   },
+   {
+    "term": "REACTOME_TCR_SIGNALING",
+    "overlap": 9,
+    "fdr": 6.661545827210869e-06
+   },
+   {
+    "term": "REACTOME_CHEMOKINE_RECEPTORS_BIND_CHEMOKINES",
+    "overlap": 5,
+    "fdr": 1.0067339641599478e-05
+   },
+   {
+    "term": "REACTOME_COSTIMULATION_BY_THE_CD28_FAMILY",
+    "overlap": 7,
+    "fdr": 1.0067339641599478e-05
+   }
+  ]
+ },
+ "deconvolution_genes": {
+  "til10_genes_dog": 108,
+  "til10_genes_human": 165,
+  "til10_total": 170
+ }
+}

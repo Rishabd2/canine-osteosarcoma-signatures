@@ -1,0 +1,5 @@
+method,n_canine_symbols,note
+ensembl_best,751,"Ensembl one-to-many or many-to-many, rule in orthologs.py"
+ensembl_one2one,14583,Ensembl one-to-one ortholog
+identity,1693,"no Ensembl row, canine symbol is a TARGET symbol (DLA- read as HLA-)"
+unmapped,20264,no ortholog found (mostly LOC ids)
