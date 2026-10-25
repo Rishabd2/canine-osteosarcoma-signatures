@@ -69,7 +69,7 @@ public, is proprietary, or no longer installs.
 12. **ISA uses CRAN `isa2` instead of Bioconductor `eisa` (forced).** `eisa` is deprecated and does
     not install on current R/Bioconductor for arm64; its `ISANormalize`, `ISAIterate`,
     `ISAUnique` and `ISAFilterRobust` are thin wrappers over `isa2`'s `isa.normalize`,
-    `isa.iterate`, `isa.unique` and `isa.filter.robust`, which we call with the authors'
+    `isa.iterate`, `isa.unique` and isa2's robustness filter, which we call with the authors'
     thresholds (1.5 genes, 0.7 samples). The seeding (Ward hierarchical clustering into 10 gene and
     7 sample groups, 3 random members each) follows `GET_ISA_SEEDs.py`. The paper does not say how
     biclusters were matched across its 25 runs; we join biclusters with gene Jaccard of at least
